@@ -1,0 +1,45 @@
+import QtQuick 2.0
+import Felgo 3.0
+import QtQuick.LocalStorage 2.12
+import "../DbManager.js" as Store
+/*
+
+// EXAMPLE USAGE:
+// add the following piece of code inside your App { } to display the List Page
+
+Summary {
+
+}
+
+*/
+
+ListPage {
+    id: listPage
+    title: qsTr("Summary")
+    signal logoutClicked
+    signal dataChanged
+    property var dataList
+    Component.onCompleted: {
+        dataList.push(
+    [{
+            type:"People",
+        text:Store.display().text,detailText:Store.display().sal
+        }])
+    dataChanged();
+    }
+
+    model:dataList
+
+    emptyText.text: qsTr("No data available")
+    // TODO add your model
+    delegate: SimpleRow{}
+    section.property: "type"
+    AppButton {
+        text: qsTr("Logout")
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: dp(10)
+        onClicked: logoutClicked()
+
+    }
+
+}
